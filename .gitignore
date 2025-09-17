@@ -1,0 +1,21 @@
+# Azure ML
+.azureml/
+outputs/
+logs/
+models/
+
+# Arquivos de ambiente
+.env
+.env.local
+.azure-ml-env
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dados
+data/raw/*.csv
+data/processed/*.parquet
