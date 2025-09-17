@@ -15,7 +15,13 @@ mlflow.db
 
 # Jupyter
 .ipynb_checkpoints/
+__pycache__/
 
 # Dados
 data/raw/*.csv
 data/processed/*.parquet
+
+# outros
+estrutura.py
+test_outputs/
+
