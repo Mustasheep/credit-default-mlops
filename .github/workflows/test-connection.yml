@@ -1,0 +1,44 @@
+name: Test Azure Connection
+on:
+  workflow_dispatch:
+
+jobs:
+  test-connection:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies  
+      run: |
+        pip install azure-ai-ml azure-identity
+        
+    - name: Test Azure ML connection
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      run: |
+        python -c "
+        import json, os
+        from azure.ai.ml import MLClient
+        from azure.identity import ClientSecretCredential
+        
+        creds = json.loads(os.environ['AZURE_CREDENTIALS'])
+        credential = ClientSecretCredential(
+            tenant_id=creds['tenantId'],
+            client_id=creds['clientId'], 
+            client_secret=creds['clientSecret']
+        )
+        
+        ml_client = MLClient(
+            credential=credential,
+            subscription_id=creds['subscriptionId'],
+            resource_group='${{ secrets.AZURE_RESOURCE_GROUP }}',
+            workspace_name='${{ secrets.AZURE_WORKSPACE_NAME }}'
+        )
+        
+        print(f'Connected to workspace: {ml_client.workspace_name}')
+        "
