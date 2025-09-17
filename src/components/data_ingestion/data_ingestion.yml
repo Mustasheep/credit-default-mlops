@@ -1,0 +1,34 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: data_ingestion
+display_name: Data Ingestion
+version: 1.0.0
+description: |
+  Componente responsável pela ingestão e validação básica dos dados de inadimplência de cartão de crédito
+
+inputs:
+  input_data:
+    type: uri_file
+    description: Arquivo CSV com dados de inadimplência
+
+outputs:
+  output_data:
+    type: uri_folder
+    description: Pasta com dados validados e metadados
+
+code: ./
+
+command: >-
+  python data_ingestion.py
+  --input_data ${{inputs.input_data}}
+  --output_data ${{outputs.output_data}}
+
+environment:
+  conda_file: requirements.txt
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+
+tags:
+  stage: data_ingestion
+  team: mlops
+  version: "1.0"
