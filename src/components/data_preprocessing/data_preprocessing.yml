@@ -1,0 +1,34 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: data_preprocessing
+display_name: Data Preprocessing
+version: 1.0.0
+description: |
+  Componente responsável pela limpeza, transformação e feature engineering dos dados
+
+inputs:
+  input_data:
+    type: uri_folder
+    description: Pasta com dados brutos validados
+
+outputs:
+  output_data:
+    type: uri_folder
+    description: Pasta com dados processados e features
+
+code: ./
+
+command: >-
+  python data_preprocessing.py
+  --input_data ${{inputs.input_data}}
+  --output_data ${{outputs.output_data}}
+
+environment:
+  conda_file: requirements.txt
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+
+tags:
+  stage: data_preprocessing
+  team: mlops
+  version: "1.0"
