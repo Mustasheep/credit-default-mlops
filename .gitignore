@@ -26,4 +26,5 @@ estrutura.py
 test_outputs/
 __init__.py
 rascunho.txt
+data_lineage_report.json
 
