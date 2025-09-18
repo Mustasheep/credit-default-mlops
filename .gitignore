@@ -24,4 +24,6 @@ data/processed/*.parquet
 # outros
 estrutura.py
 test_outputs/
+__init__.py
+rascunho.txt
 
